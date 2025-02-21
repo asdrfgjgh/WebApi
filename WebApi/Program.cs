@@ -14,7 +14,6 @@ builder.Services.Configure<RouteOptions>(o => o.LowercaseUrls = true);
 var sqlConnectionString = builder.Configuration.GetValue<string>("SqlConnectionString");
 var sqlConnectionStringFound = !string.IsNullOrWhiteSpace(sqlConnectionString);
 
-
 if (string.IsNullOrWhiteSpace(sqlConnectionString))
 throw new InvalidProgramException("Configuration variable SqlConnectionString not found");
 builder.Services.AddTransient<IRepository, Repository>(o => new Repository(sqlConnectionString));
