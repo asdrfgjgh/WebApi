@@ -24,11 +24,16 @@ namespace WebApi.Repositories
             }
         }
 
-        public async Task<WebApi?> GetByIdAsync(Guid id)
+        public async Task<WebApi> GetByIdAsync(Guid id)
         {
             using (var sqlConnection = new SqlConnection(sqlConnectionString))
             {
-                return await sqlConnection.QuerySingleOrDefaultAsync<WebApi>("SELECT * FROM [Environment2D] WHERE Id = @Id", new { id });
+                var result = await sqlConnection.QuerySingleOrDefaultAsync<WebApi>("SELECT * FROM [Environment2D] WHERE Id = @Id", new { id });
+                if (result == null)
+                {
+                    throw new KeyNotFoundException($"WebApi with Id {id} not found.");
+                }
+                return result;
             }
         }
 
