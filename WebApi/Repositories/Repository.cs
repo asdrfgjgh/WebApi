@@ -24,7 +24,7 @@ namespace WebApi.Repositories
             }
         }
 
-        public async Task<WebApi> GetByIdAsync(Guid id)
+        public async Task<WebApi?> GetByIdAsync(Guid id)
         {
             using (var sqlConnection = new SqlConnection(sqlConnectionString))
             {
