@@ -5,14 +5,14 @@ namespace WebApi
     public class WebApi
     {
         public Guid id { get; set; }
-        [Required]
-        public string name { get; set; }
-        [Required]
-        public string ownerUserId { get; set; }
-        [Required]
-        public int maxLength { get; set; }
-        [Required]
-        public int maxHeight { get; set; }
+        //[Required]
+        public required string name { get; set; }
+        //[Required]
+        public required string ownerUserId { get; set; }
+        //[Required]
+        public required int maxLength { get; set; }
+        //[Required]
+        public required int maxHeight { get; set; }
 
         // Constructor to initialize the 'name' field
         public WebApi() { }
