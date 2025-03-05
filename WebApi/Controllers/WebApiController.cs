@@ -57,7 +57,7 @@ namespace WebApi.Controllers
             }
             newWebApi.id = webApiId;
             await _repository.UpdateAsync(newWebApi);
-            return CreatedAtRoute("GetWereldBouwer", new { id = newWebApi.id }, newWebApi);
+            return CreatedAtRoute("GetWebApi", new { id = newWebApi.id }, newWebApi);
         }
 
         [HttpDelete("{webApiId}", Name = "DeleteWebApi")]
