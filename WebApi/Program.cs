@@ -38,12 +38,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-//app.UseAuthorization();
+app.UseAuthorization();
 
-//app.MapControllers().RequireAuthorization();
+app.MapControllers();
 //app.MapGroup(prefix: "/account")
 //    .MapIdentityApi<IdentityUser>();
-//app.MapGet("/", () => "Hello World, the API is up");
+app.MapGet("/", () => "Hello World, the API is up");
 //app.MapPost(pattern: "/account/logout",
 //    async (SignInManager<IdentityUser> signInManager,
 //    [FromBody] object empty) =>
