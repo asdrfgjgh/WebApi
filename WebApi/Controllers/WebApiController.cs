@@ -7,7 +7,7 @@ using WebApi.Repositories;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("WebApi")]
     public class WebApiController : ControllerBase
     {
         private readonly IRepository _repository;
@@ -30,7 +30,7 @@ namespace WebApi.Controllers
  
 
 
-        [HttpGet("{id}", Name = "GetWebApiId")]
+        [HttpGet("{WebApiId}", Name = "GetWebApiId")]
         public async Task<ActionResult<WebApi>> Get(Guid WebApiId)
         {
             var WebApi = await _repository.GetByIdAsync(WebApiId);
