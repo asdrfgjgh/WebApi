@@ -11,7 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 //    });
 // Add services to the container.
 builder.Services.Configure<RouteOptions>(o => o.LowercaseUrls = true);
-var sqlConnectionString = builder.Configuration.GetValue<string>("SqlConnectionString");
+var sqlConnectionString = builder.Configuration.GetConnectionString("SqlConnectionString");
+
+
 var sqlConnectionStringFound = !string.IsNullOrWhiteSpace(sqlConnectionString);
 
 if (string.IsNullOrWhiteSpace(sqlConnectionString))
