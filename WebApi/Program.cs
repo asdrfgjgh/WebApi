@@ -1,24 +1,53 @@
+using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Identity;
 using WebApi.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
-//builder.Services.AddAuthorization();
-//builder.Services
-//    .AddIdentityApiEndpoints<IdentityUser>()
-//    .AddDapperStores(options =>
-//    {
-//        options.ConnectionString = dbConnectionString;
-//    });
-// Add services to the container.
+builder.Services.AddAuthorization(options =>
+{
+
+    options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("UserPolicy", policy => policy.RequireRole("User"));
+});
+    //.AddIdentityApiEndpoints<IdentityUser>(options =>
+    //{
+    //    options.Password.RequireDigit = true;
+    //    options.Password.RequiredLength = 8;
+    //    options.Password.RequireNonAlphanumeric = false;
+    //    options.Password.RequireUppercase = true;
+    //    options.Password.RequireLowercase = false;
+    //    options.User.RequireUniqueEmail = true;
+    //})
+    //.AddDapperStores(options =>
+    //{
+        //var sqlConnectionString = Environment.GetEnvironmentVariable("SQLConnectionString");
+        //if (string.IsNullOrWhiteSpace(sqlConnectionString))
+        //{
+        //    throw new InvalidProgramException("Configuration variable SqlConnectionString not found");
+        //}
+    //    options.ConnectionString = sqlConnectionString;
+    //});
+//// Add services to the container.
+//builder.Services.Configure<BearerTokenOptions>(options =>
+//{
+//    options.TokenValidityInMinutes = 60;
+//    options.Issuer = "YourIssuer";
+//    options.Audience = "YourAudience";
+//});
 builder.Services.Configure<RouteOptions>(o => o.LowercaseUrls = true);
 var sqlConnectionString = Environment.GetEnvironmentVariable("SQLConnectionString");
 
 Console.WriteLine($"SQL Connection String: {sqlConnectionString}");
 
 var sqlConnectionStringFound = !string.IsNullOrWhiteSpace(sqlConnectionString);
-
 if (string.IsNullOrWhiteSpace(sqlConnectionString))
-throw new InvalidProgramException("Configuration variable SqlConnectionString not found");
+{
+    throw new InvalidProgramException("Configuration variable SqlConnectionString not found");
+}
+
+
+
+
 builder.Services.AddTransient<IRepository, Repository>(o => new Repository(sqlConnectionString));
 
 builder.Services.AddControllers();
@@ -41,25 +70,21 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllers();
-//app.MapGroup(prefix: "/account")
-//    .MapIdentityApi<IdentityUser>();
-app.MapGet("/", () => "Hello World, the API is up");
-//app.MapPost(pattern: "/account/logout",
-//    async (SignInManager<IdentityUser> signInManager,
-//    [FromBody] object empty) =>
-//    {
-//        if (empty != null)
-//        {
-//            await signInManager.SignOutAsync();
-//            return Results.Ok();
-//        }
-//        return Results.Unauthorized();
-//    })
-//    .RequireAuthorization();
 
+app.MapControllers();//.RequireAuthorization();
+//app.MapGroup("/account")
+//    .MapIdentityApi<IdentityUser>();
+
+//app.MapPost("/account/logout", async (SignInManager<IdentityUser> signInManager) =>
+//{
+//                await signInManager.SignOutAsync();
+//                return Results.Ok();
+//}).RequireAuthorization();
+
+app.MapGet("/", () => "Hello World, the API is up");
 
 
 
