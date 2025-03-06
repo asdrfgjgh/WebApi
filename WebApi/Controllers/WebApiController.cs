@@ -23,17 +23,11 @@ namespace WebApi.Controllers
         [HttpGet(Name = "GetWebApi")]
         public async Task<ActionResult<IEnumerable<WebApi>>> Get()
         {
-            try
-            {
+
                 var webApi = await _repository.GetAllAsync();
                 return Ok(webApi);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while getting all WebApi items.");
-                return StatusCode(500, "Internal server error");
-            }
         }
+ 
 
 
         [HttpGet("{id}", Name = "GetWebApiId")]
