@@ -21,7 +21,7 @@ throw new InvalidProgramException("Configuration variable SqlConnectionString no
 builder.Services.AddTransient<IRepository, Repository>(o => new Repository(sqlConnectionString));
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Learn a more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
