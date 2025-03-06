@@ -13,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<RouteOptions>(o => o.LowercaseUrls = true);
 var sqlConnectionString = builder.Configuration["SQLConnectionString"];
 
+Console.WriteLine($"SQL Connection String: {sqlConnectionString}");
 
 var sqlConnectionStringFound = !string.IsNullOrWhiteSpace(sqlConnectionString);
 
