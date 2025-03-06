@@ -1,4 +1,5 @@
 
+using System.Linq.Expressions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing.Template;
@@ -22,8 +23,16 @@ namespace WebApi.Controllers
         [HttpGet(Name = "GetWebApi")]
         public async Task<ActionResult<IEnumerable<WebApi>>> Get()
         {
-            var webApi = await _repository.GetAllAsync();
-            return Ok(webApi);
+            try
+            {
+                var webApi = await _repository.GetAllAsync();
+                return Ok(webApi);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while getting all WebApi items.");
+                return StatusCode(500, "Internal server error");
+            }
         }
 
 
