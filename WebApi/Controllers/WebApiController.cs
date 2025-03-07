@@ -31,7 +31,7 @@ namespace WebApi.Controllers
         public async Task<ActionResult<IEnumerable<WebApi>>> Get()
         {
             var userId = _authenticationService.GetCurrentAuthenticatedUserId();
-            _logger.LogInformation("Authenticated user Id: {UserId", userId);
+            _logger.LogInformation("Authenticated user Id: {UserId}", userId);
 
                 var webApi = await _repository.GetAllAsync();
                 return Ok(webApi);
