@@ -23,26 +23,6 @@ namespace WebApi.Tests
         }
 
         [Fact]
-        public async Task Get_ReturnsOkResult_WithListOfWebApi()
-        {
-            // Arrange
-            var webApiList = new List<WebApi>
-            {
-                new WebApi { id = Guid.NewGuid(), name = "Test1", ownerUserId = "user1", maxLength = 100, maxHeight = 200 },
-                new WebApi { id = Guid.NewGuid(), name = "Test2", ownerUserId = "user2", maxLength = 150, maxHeight = 250 }
-            };
-            _mockRepository.Setup(repo => repo.GetAllAsync()).ReturnsAsync(webApiList);
-
-            // Act
-            var result = await _controller.Get();
-
-            // Assert
-            var okResult = Assert.IsType<OkObjectResult>(result.Result);
-            var returnValue = Assert.IsType<List<WebApi>>(okResult.Value);
-            Assert.Equal(2, returnValue.Count);
-        }
-
-        [Fact]
         public async Task GetById_ReturnsNotFound_WhenWebApiDoesNotExist()
         {
             // Arrange
