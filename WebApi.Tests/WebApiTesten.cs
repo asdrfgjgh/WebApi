@@ -18,7 +18,8 @@ namespace WebApi.Tests
         {
             _mockRepository = new Mock<IRepository>();
             _mockLogger = new Mock<ILogger<WebApiController>>();
-            _controller = new WebApiController(_mockRepository.Object, _mockLogger.Object);
+            var mockAuthenticationService = new Mock<IAuthenticationService>();
+            _controller = new WebApiController(_mockRepository.Object, _mockLogger.Object, mockAuthenticationService.Object);
         }
 
         [Fact]
