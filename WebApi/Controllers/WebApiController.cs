@@ -100,5 +100,15 @@ namespace WebApi.Controllers
             await _repository.DeleteAsync(webApiId);
             return Ok(webApiId);
         }
+        [HttpGet("GetUserId", Name = "GetUserId")]
+        public ActionResult<string> GetUserId()
+        {
+            var userId = _authenticationService.GetCurrentAuthenticatedUserId();
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+            return Ok(userId);
+        }
     }
 }
