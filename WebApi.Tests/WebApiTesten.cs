@@ -27,7 +27,7 @@ namespace WebApi.Tests
         {
             // Arrange
             var webApiId = Guid.NewGuid();
-            _mockRepository.Setup(repo => repo.GetByIdAsync(webApiId)).ReturnsAsync((WebApi)null);
+            _mockRepository.Setup(repo => repo.GetByWebApiIdAsync(webApiId)).ReturnsAsync((WebApi)null);
 
             // Act
             var result = await _controller.Get(webApiId);
@@ -60,7 +60,7 @@ namespace WebApi.Tests
             var existingWebApi = new WebApi { id = webApiId, name = "Existing WebApi", ownerUserId = "user4", maxLength = 250, maxHeight = 350 };
             var updatedWebApi = new WebApi { id = webApiId, name = "Updated WebApi", ownerUserId = "user4", maxLength = 300, maxHeight = 400 };
 
-            _mockRepository.Setup(repo => repo.GetByIdAsync(webApiId)).ReturnsAsync(existingWebApi);
+            _mockRepository.Setup(repo => repo.GetByWebApiIdAsync(webApiId)).ReturnsAsync(existingWebApi);
             _mockRepository.Setup(repo => repo.UpdateAsync(updatedWebApi)).Returns(Task.CompletedTask);
 
             // Act
@@ -79,7 +79,7 @@ namespace WebApi.Tests
             var webApiId = Guid.NewGuid();
             var existingWebApi = new WebApi { id = webApiId, name = "Existing WebApi", ownerUserId = "user5", maxLength = 350, maxHeight = 450 };
 
-            _mockRepository.Setup(repo => repo.GetByIdAsync(webApiId)).ReturnsAsync(existingWebApi);
+            _mockRepository.Setup(repo => repo.GetByWebApiIdAsync(webApiId)).ReturnsAsync(existingWebApi);
             _mockRepository.Setup(repo => repo.DeleteAsync(webApiId)).Returns(Task.CompletedTask);
 
             // Act
