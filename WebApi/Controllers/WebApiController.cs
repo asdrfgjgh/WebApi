@@ -76,6 +76,7 @@ namespace WebApi.Controllers
             _logger.LogInformation("Authenticated user ID: {UserId}", userId);
 
             webApi.id = Guid.NewGuid();
+            webApi.ownerUserId = userId;
             await _repository.AddAsync(webApi);
             return CreatedAtRoute("GetWebApi", new { id = webApi.id }, webApi);
         }

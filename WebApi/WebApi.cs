@@ -7,8 +7,7 @@ namespace WebApi
         public Guid id { get; set; }
         [Required]
         public required string name { get; set; }
-        [Required]
-        public required string ownerUserId { get; set; }
+        public string ownerUserId { get; set; }
         [Required]
         public required int maxLength { get; set; }
         [Required]
