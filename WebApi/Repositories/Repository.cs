@@ -24,7 +24,7 @@ namespace WebApi.Repositories
             }
         }
 
-        public async Task<WebApi> GetByIdAsync(Guid id)
+        public async Task<WebApi> GetByWebApiIdAsync(Guid id)
         {
             using (var sqlConnection = new SqlConnection(sqlConnectionString))
             {
@@ -34,19 +34,27 @@ namespace WebApi.Repositories
                     throw new KeyNotFoundException($"WebApi with Id {id} not found.");
                 }
                 return result;
-            } // opnieuw proberen
-        }
-
-        public async Task<WebApi> AddAsync(WebApi WebApi)
-        {
-            using (var sqlConnection = new SqlConnection(sqlConnectionString))
-            {
-                await sqlConnection.ExecuteAsync("INSERT INTO [Environment2D] (Id, Name, OwnerUserId, MaxHeight, MaxLength) VALUES (@Id, @Name, @OwnerUserId, @MaxHeight, @MaxLength)", WebApi);
-                return WebApi;
             }
         }
 
-        public async Task UpdateAsync(WebApi WebApi)
+        public async Task<IEnumerable<WebApi>> GetByUserIdAsync(string userId)
+        {
+            using (var sqlConnection = new SqlConnection(sqlConnectionString))
+            {
+                return await sqlConnection.QueryAsync<WebApi>("SELECT * FROM [Environment2D] WHERE OwnerUserId = @OwnerUserId", new { OwnerUserId = userId });
+            }
+        }
+
+        public async Task<WebApi> AddAsync(WebApi webApi)
+        {
+            using (var sqlConnection = new SqlConnection(sqlConnectionString))
+            {
+                await sqlConnection.ExecuteAsync("INSERT INTO [Environment2D] (Id, Name, OwnerUserId, MaxHeight, MaxLength) VALUES (@Id, @Name, @OwnerUserId, @MaxHeight, @MaxLength)", webApi);
+                return webApi;
+            }
+        }
+
+        public async Task UpdateAsync(WebApi webApi)
         {
             using (var sqlConnection = new SqlConnection(sqlConnectionString))
             {
@@ -55,7 +63,7 @@ namespace WebApi.Repositories
                                                  "OwnerUserId = @OwnerUserId, " +
                                                  "MaxHeight = @MaxHeight, " +
                                                  "MaxLength = @MaxLength " +
-                                                 "WHERE Id = @Id", WebApi);
+                                                 "WHERE Id = @Id", webApi);
             }
         }
 

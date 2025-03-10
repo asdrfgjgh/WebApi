@@ -36,7 +36,7 @@ namespace WebApi.Controllers
                 var webApi = await _repository.GetAllAsync();
                 return Ok(webApi);
         }
- 
+
 
 
         [HttpGet("{WebApiId}", Name = "GetWebApiId")]
@@ -46,13 +46,26 @@ namespace WebApi.Controllers
             var userId = _authenticationService.GetCurrentAuthenticatedUserId();
             _logger.LogInformation("Authenticated user ID: {UserId}", userId);
 
-            var WebApi = await _repository.GetByIdAsync(WebApiId);
+            var WebApi = await _repository.GetByWebApiIdAsync(WebApiId);
             _webApi.Add(WebApi);
             if (WebApi == null)
             {
                 return NotFound();
             }
             return Ok(WebApi);
+        }
+
+        [HttpGet("getwereld/{userId}", Name = "GetWereldBouwerByUserId")]
+        [Authorize]
+        public async Task<ActionResult<WebApi>> GetWereld(string userId)
+        {
+            //var userId = _authenticationService.GetCurrentAuthenticatedUserId();
+            var wereldBouwer = await _repository.GetByUserIdAsync(userId);
+            if (wereldBouwer == null)
+            {
+                return NotFound();
+            }
+            return Ok(wereldBouwer);
         }
 
         [HttpPost(Name = "PostWebApi")]
@@ -74,7 +87,7 @@ namespace WebApi.Controllers
             var userId = _authenticationService.GetCurrentAuthenticatedUserId();
             _logger.LogInformation("Authenticated user ID: {UserId}", userId);
 
-            var existingWebApi = await _repository.GetByIdAsync(webApiId);
+            var existingWebApi = await _repository.GetByWebApiIdAsync(webApiId);
             if (existingWebApi == null)
             {
                 return NotFound();
@@ -91,7 +104,7 @@ namespace WebApi.Controllers
             var userId = _authenticationService.GetCurrentAuthenticatedUserId();
             _logger.LogInformation("Authenticated user ID: {UserId}", userId);
 
-            var existingWebApi = await _repository.GetByIdAsync(webApiId);
+            var existingWebApi = await _repository.GetByWebApiIdAsync(webApiId);
             if (existingWebApi == null)
             {
                 return NotFound();
@@ -110,5 +123,6 @@ namespace WebApi.Controllers
             }
             return Ok(userId);
         }
+
     }
 }
