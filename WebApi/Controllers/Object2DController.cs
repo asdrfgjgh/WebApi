@@ -24,7 +24,7 @@ namespace WebApi.Controllers
             _logger = logger;
         }
 
-        [HttpGet("{environmentId}", Name = "GetAllObject2D")]
+        [HttpGet("{environmentId}", Name = "GetObject2D")]
         [Authorize]
         public async Task<ActionResult<IEnumerable<Object2D>>> GetByEnvironmentId(Guid environmentId)
         {
